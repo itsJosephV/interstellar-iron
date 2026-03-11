@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Search from "../../components/Search.astro";
+
+const PAGE_SIZE = 3;
+
+const allPosts = await getCollection("posts");
+
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const totalPages = Math.ceil(sortedPosts.length / PAGE_SIZE);
+const posts = sortedPosts.slice(0, PAGE_SIZE);
+---
+
+<Layout>
+  <Search />
+  <div class="p-5 flex flex-col gap-5">
+    <h1>
+      <a class="text-sm italic text-violet-400" href="/"
+        >{"←"} Volver
+        <br /></a
+      > All Posts - Page 1
+    </h1>
+    <ul class="text-red-400">
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <nav class="flex gap-4 text-orange-400">
+      {totalPages > 1 && <a href="/posts/page/2">Next</a>}
+    </nav>
+  </div>
+</Layout>

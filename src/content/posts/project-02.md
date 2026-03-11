@@ -1,0 +1,9 @@
+---
+title: 'Reforma de oficinas de Domingo Alonso en 7 Palmas'
+category: "Reformas"
+date: 2018-02-12
+---
+
+
+
+El inmueble objeto de este proyecto, ha servido desde hace años como oficinas administrativas para la empresa Domingo Alonso, compañía referencia en el sector del automóvil en Canarias. En 2017 se nos entrega un proyecto de reforma para su estudio, sorprendente y vanguardista. Y a finales de este mismo año, se nos confía su ejecución, un gran reto tras conocer en profundidad los detalles. Desde enero a junio de 2018 se llevó a cabo una profunda reforma del inmueble, tanto a nivel estético como funcional, con un ambicioso proyecto que ha convertido estas oficinas en un icono de vanguardismo en los más de mil metros cuadrados que atesora. Son muchos los detalles y rincones que merecen ser mencionados en este proyecto, renovadores y audaces, llenos de originalidad y modernidad, sin perder eso sí, un ápice de funcionalidad. Desde sus puestos de trabajo totalmente equipados con las tecnologías más actuales, salas de reuniones y despachos espaciosos y acogedores, hasta todos aquellos volúmenes destinados a ocio y relax, como el office, piscina de bolas y otros espacios, que, en un entorno laboral, cobran gran protagonismo como liberadores de estrés, siendo en los tiempos que corren, tan necesarios y valorados por el personal laboral, haciendo del tiempo de permanencia en el trabajo, una agradable convivencia. La inversión destinada solamente a la reforma de instalaciones y arquitectura ha sido de 573.635 €, siendo el monto total muy superior una vez incluido el mobiliario y la decoración. En definitiva, un proyecto del que Pérez Moreno puede sentirse muy orgulloso al haber intervenido.

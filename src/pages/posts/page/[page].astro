@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import Search from "../../../components/Search.astro";
+
+export async function getStaticPaths() {
+  const PAGE_SIZE = 3;
+  const allPosts = await getCollection("posts");
+
+  const sortedPosts = allPosts.sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+
+  const totalPages = Math.ceil(sortedPosts.length / PAGE_SIZE);
+
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const pageNum = i + 2;
+    const start = (pageNum - 1) * PAGE_SIZE;
+    return {
+      params: { page: String(pageNum) },
+      props: {
+        posts: sortedPosts.slice(start, start + PAGE_SIZE),
+        currentPage: pageNum,
+        totalPages,
+      },
+    };
+  });
+}
+
+const { posts, currentPage, totalPages } = Astro.props;
+const prevUrl = currentPage === 2 ? "/posts" : `/posts/page/${currentPage - 1}`;
+const nextUrl =
+  currentPage < totalPages ? `/posts/page/${currentPage + 1}` : null;
+---
+
+<Layout>
+  <div class="p-5 flex flex-col gap-5">
+    <Search />
+    <h1>
+      <a class="text-sm italic text-violet-400" href="/"
+        >{"←"} Volver
+        <br /></a
+      > All Posts - Page {currentPage}
+    </h1>
+
+    <ul class="text-red-400">
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/posts/${post.slug}`}>{post.data.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <nav class="flex gap-4 text-orange-400">
+      <a href={prevUrl}>Previous</a>
+      {nextUrl && <a href={nextUrl}>Next</a>}
+    </nav>
+  </div>
+</Layout>

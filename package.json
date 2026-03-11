@@ -1,0 +1,31 @@
+{
+  "name": "interstellar-iron",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.4.2",
+    "@iconify-json/mdi": "^1.2.3",
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^5.17.1",
+    "astro-pagefind": "^1.8.5",
+    "fuse.js": "^7.1.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "@iconify/json": "^2.2.447",
+    "@iconify/tailwind4": "^1.2.3",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "unplugin-icons": "^23.0.1"
+  }
+}

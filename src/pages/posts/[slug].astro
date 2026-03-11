@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+
+  return allPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+const { Content } = await render(post);
+---
+
+<Layout>
+  <article class="p-5 flex flex-col gap-5" data-pagefind-body>
+    <a class="text-sm italic text-violet-400" href="/posts"
+      >{"←"} Volver<br /></a
+    >
+
+    <!-- Exposes title to result.meta.title -->
+    <h1 data-pagefind-meta="title">{post.data.title}</h1>
+
+    <!-- Exposes category as a filterable field -->
+    <p data-pagefind-filter="category">{post.data.category}</p>
+
+    <Content />
+  </article>
+</Layout>

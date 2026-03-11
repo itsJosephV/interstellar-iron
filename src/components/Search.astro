@@ -1,0 +1,45 @@
+---
+// No frontmatter needed
+---
+
+<div>
+  <input id="search-input" type="text" placeholder="Search..." />
+  <ul id="search-results"></ul>
+</div>
+
+<script is:inline>
+  const input = document.getElementById("search-input");
+  const resultsList = document.getElementById("search-results");
+
+  try {
+    const pagefind = await import(/* @vite-ignore */ "/pagefind/pagefind.js");
+    await pagefind.init();
+
+    if (pagefind) {
+      alert("Pagefind loaded successfully!");
+    }
+    input.addEventListener("input", async (e) => {
+      const query = e.target.value.trim();
+      resultsList.innerHTML = "";
+      if (!query) return;
+
+      const search = await pagefind.debouncedSearch(query);
+      if (!search) return;
+
+      const results = await Promise.all(search.results.map((r) => r.data()));
+
+      for (const result of results) {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <a href="${result.url}">
+            <strong>${result.meta.title}</strong>
+            <p>${result.filters.category}</p>
+          </a>
+        `;
+        resultsList.appendChild(li);
+      }
+    });
+  } catch (e) {
+    console.warn("Pagefind not available:", e);
+  }
+</script>

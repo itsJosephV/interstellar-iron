@@ -1,0 +1,7 @@
+---
+title: 'Parque Tecnológico Fuerteventura'
+category: "Industria"
+date: 2025-12-01
+---
+
+Fuerteventura cuenta desde hoy con el primer Parque Tecnológico construido en Canarias, con la capacidad para acoger hasta 64 empresas de desarrollo e investigación y varios negocios que ya han mostrado interés por instalarse en un edificio emblemático de la zona de Los Estancos. El que fuera hasta los años setenta aeropuerto de la isla y testigo de la llegada de los primeros turistas y más tarde un "vertedero incontrolado" quedó hoy inaugurado como parque tecnológico por el presidente del Gobierno canario, Paulino Rivero, y el homónimo majorero, Mario Cabrera. Tras descubrir una placa del salón de actos central, dedicado a Andrés Valerón Hernández, exconsejero de Industria y Nuevas Tecnologías del Cabildo y uno de los principales impulsores del proyecto, Mario Cabrera no ha ocultado el "orgullo" de que el Parque Tecnológico de Fuerteventura "comience a andar", dos años después de que en noviembre de 2012 comenzara la obra. Cabrera ha recordado que a lo largo de estos años han estado trabajando alrededor de un millar de personas distribuidas en unas 100 empresas y pymes de todo tipo, de las que el 99 % son majoreras y, en un mismo porcentaje, los equipos técnicos y personal son también de la isla.
