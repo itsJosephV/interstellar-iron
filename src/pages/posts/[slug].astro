@@ -17,16 +17,17 @@ const { Content } = await render(post);
 ---
 
 <Layout>
-  <article class="p-5 flex flex-col gap-5" data-pagefind-body>
+  <div class="p-5">
     <a class="text-sm italic text-violet-400" href="/posts"
       >{"←"} Volver<br /></a
     >
+    <article class="flex flex-col gap-5" data-pagefind-body>
+      <!-- Exposes title to result.meta.title -->
+      <h1 data-pagefind-meta="title">{post.data.title}</h1>
 
-    <!-- Exposes title to result.meta.title -->
-    <h1 data-pagefind-meta="title">{post.data.title}</h1>
-
-    <!-- Exposes category as a filterable field -->
-    <p data-pagefind-filter="category">{post.data.category}</p>
-    <Content />
-  </article>
+      <!-- Exposes category as a filterable field -->
+      <p data-pagefind-filter="category">{post.data.category}</p>
+      <Content />
+    </article>
+  </div>
 </Layout>

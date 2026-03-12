@@ -5,6 +5,7 @@ interface SearchResult {
   url: string;
   meta: { title: string };
   filters: { category: string };
+  excerpt: string;
 }
 
 const SearchReact = () => {
@@ -116,7 +117,7 @@ const SearchReact = () => {
         Search posts
         <Autocomplete.Input
           placeholder="e.g. Edificio Dársena"
-          className="bg-[canvas] h-10 w-[16rem] md:w-[20rem] font-normal rounded-md border border-slate-200 pl-3.5 text-base text-slate-900 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
+          className="bg-[canvas] h-10 w-sm md:w-lg font-normal rounded-md border border-slate-200 pl-3.5 text-base text-slate-900 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
         />
       </label>
 
@@ -152,6 +153,12 @@ const SearchReact = () => {
                     <div className="text-sm text-slate-400">
                       {post.filters.category}
                     </div>
+                    {post.excerpt && (
+                      <div
+                        className="text-sm text-slate-500 line-clamp-2 [&_mark]:bg-transparent [&_mark]:text-slate-900 [&_mark]:font-medium"
+                        dangerouslySetInnerHTML={{ __html: post.excerpt }}
+                      />
+                    )}
                   </div>
                 </Autocomplete.Item>
               ))}
