@@ -8,38 +8,50 @@
 </div>
 
 <script is:inline>
-  const input = document.getElementById("search-input");
-  const resultsList = document.getElementById("search-results");
+  async function initSearch() {
+    try {
+      const pagefind = await import(/* @vite-ignore */ "/pagefind/pagefind.js");
+      await pagefind.init();
 
-  try {
-    const pagefind = await import(/* @vite-ignore */ "/pagefind/pagefind.js");
-    await pagefind.init();
+      const input = document.getElementById("search-input");
+      const resultsList = document.getElementById("search-results");
 
-    if (pagefind) {
-      alert("Pagefind loaded successfully!");
+      input.addEventListener("input", async (e) => {
+        const query = e.target.value.trim();
+        resultsList.innerHTML = "";
+        if (!query) return;
+
+        try {
+          const search = await pagefind.search(query);
+          if (!search || !search.results) return;
+
+          const results = await Promise.all(
+            search.results.map((r) => r.data()),
+          );
+
+          for (const result of results) {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <a href="${result.url}">
+                <strong>${result.meta.title}</strong>
+                <p>${result.filters.category}</p>
+              </a>
+            `;
+            resultsList.appendChild(li);
+          }
+        } catch (searchError) {
+          console.error("Search error:", searchError);
+        }
+      });
+    } catch (e) {
+      console.error("Failed to initialize pagefind:", e);
     }
-    input.addEventListener("input", async (e) => {
-      const query = e.target.value.trim();
-      resultsList.innerHTML = "";
-      if (!query) return;
+  }
 
-      const search = await pagefind.debouncedSearch(query);
-      if (!search) return;
-
-      const results = await Promise.all(search.results.map((r) => r.data()));
-
-      for (const result of results) {
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <a href="${result.url}">
-            <strong>${result.meta.title}</strong>
-            <p>${result.filters.category}</p>
-          </a>
-        `;
-        resultsList.appendChild(li);
-      }
-    });
-  } catch (e) {
-    console.warn("Pagefind not available:", e);
+  // Wait for DOM to be ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSearch);
+  } else {
+    initSearch();
   }
 </script>

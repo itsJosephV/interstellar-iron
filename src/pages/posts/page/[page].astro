@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import Search from "../../../components/Search.astro";
+import SearchReact from "../../../components/SearchReact";
 
 export async function getStaticPaths() {
   const PAGE_SIZE = 3;
@@ -35,7 +36,8 @@ const nextUrl =
 
 <Layout>
   <div class="p-5 flex flex-col gap-5">
-    <Search />
+    <!-- <Search /> -->
+    <SearchReact client:load />
     <h1>
       <a class="text-sm italic text-violet-400" href="/"
         >{"←"} Volver

@@ -12,7 +12,15 @@ import "../styles/global.css";
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
-  <body>
-    <slot />
+  <body class="relative">
+    <div class="root">
+      <slot />
+    </div>
   </body>
 </html>
+
+<style is:global>
+  .root {
+    isolation: isolate;
+  }
+</style>
