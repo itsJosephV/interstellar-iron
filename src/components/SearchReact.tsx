@@ -13,11 +13,12 @@ const SearchReact = () => {
   const [error, setError] = React.useState<string | null>(null);
   const [isPending, startTransition] = React.useTransition();
   const pagefindRef = React.useRef<any>(null);
+  const isWarm = React.useRef(false);
 
   const abortControllerRef = React.useRef<AbortController | null>(null);
 
   function getStatus(): React.ReactNode | null {
-    if (isPending) {
+    if (isPending && !isWarm.current) {
       return (
         <React.Fragment>
           <div
@@ -87,6 +88,7 @@ const SearchReact = () => {
             setError("Search is not ready");
             return;
           }
+
           const result = await pagefindRef.current.search(nextSearchValue);
           if (controller.signal.aborted) {
             return;
@@ -101,9 +103,11 @@ const SearchReact = () => {
           const data = await Promise.all(
             result.results.map((r: any) => r.data()),
           );
+
           startTransition(() => {
             setSearchResults(data);
             setError(null);
+            isWarm.current = true;
           });
         });
       }}
