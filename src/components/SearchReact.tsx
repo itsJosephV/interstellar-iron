@@ -49,9 +49,11 @@ const SearchReact = () => {
   React.useEffect(() => {
     async function initPagefind() {
       try {
-        const pagefind = await import(
-          /* @vite-ignore */ "/dist" + "/pagefind/pagefind.js"
-        );
+        const pagefindPath = import.meta.env.DEV
+          ? "/dist/pagefind/pagefind.js"
+          : "/pagefind/pagefind.js";
+
+        const pagefind = await import(/* @vite-ignore */ pagefindPath);
         await pagefind.init();
         pagefindRef.current = pagefind;
       } catch (e) {

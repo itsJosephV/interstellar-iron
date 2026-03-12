@@ -8,6 +8,11 @@ import pagefind from "astro-pagefind";
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        external: [/\/pagefind\/pagefind\.js/],
+      },
+    },
   },
 
   integrations: [react(), pagefind()],
