@@ -14,15 +14,31 @@ const SearchReact = () => {
   const [isPending, startTransition] = React.useTransition();
   const pagefindRef = React.useRef<any>(null);
   const isWarm = React.useRef(false);
-
   const abortControllerRef = React.useRef<AbortController | null>(null);
+
+  React.useEffect(() => {
+    async function initPagefind() {
+      try {
+        const pagefindPath = import.meta.env.DEV
+          ? "/dist/pagefind/pagefind.js"
+          : "/pagefind/pagefind.js";
+
+        const pagefind = await import(/* @vite-ignore */ pagefindPath);
+        await pagefind.init();
+        pagefindRef.current = pagefind;
+      } catch (e) {
+        console.error("Failed to initialize pagefind:", e);
+      }
+    }
+    initPagefind();
+  }, []);
 
   function getStatus(): React.ReactNode | null {
     if (isPending && !isWarm.current) {
       return (
         <React.Fragment>
           <div
-            className="size-4 rounded-full border-2 border-gray-200 border-t-gray-600 animate-spin"
+            className="size-4 rounded-full border-2 border-slate-200 border-t-slate-600 animate-spin"
             aria-hidden
           />
           Searching…
@@ -47,26 +63,8 @@ const SearchReact = () => {
 
   const status = getStatus();
 
-  React.useEffect(() => {
-    async function initPagefind() {
-      try {
-        const pagefindPath = import.meta.env.DEV
-          ? "/dist/pagefind/pagefind.js"
-          : "/pagefind/pagefind.js";
-
-        const pagefind = await import(/* @vite-ignore */ pagefindPath);
-        await pagefind.init();
-        pagefindRef.current = pagefind;
-      } catch (e) {
-        console.error("Failed to initialize pagefind:", e);
-      }
-    }
-    initPagefind();
-  }, []);
-
   return (
     <Autocomplete.Root
-      items={searchResults}
       value={searchValue}
       onValueChange={(nextSearchValue) => {
         setSearchValue(nextSearchValue);
@@ -114,11 +112,11 @@ const SearchReact = () => {
       itemToStringValue={(item: SearchResult) => item.meta.title}
       filter={null}
     >
-      <label className="flex flex-col gap-1 text-sm leading-5 font-medium text-gray-900">
+      <label className="flex flex-col gap-1 text-sm leading-5 font-medium text-slate-900">
         Search posts
         <Autocomplete.Input
           placeholder="e.g. Edificio Dársena"
-          className="bg-[canvas] h-10 w-[16rem] md:w-[20rem] font-normal rounded-md border border-gray-200 pl-3.5 text-base text-gray-900 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
+          className="bg-[canvas] h-10 w-[16rem] md:w-[20rem] font-normal rounded-md border border-slate-200 pl-3.5 text-base text-slate-900 focus:outline-2 focus:-outline-offset-1 focus:outline-blue-800"
         />
       </label>
 
@@ -129,33 +127,34 @@ const SearchReact = () => {
           align="start"
         >
           <Autocomplete.Popup
-            className="w-(--anchor-width) max-h-[min(var(--available-height),23rem)] max-w-(--available-width) overflow-y-auto scroll-pt-2 scroll-pb-2 overscroll-contain rounded-md bg-[canvas] py-2 text-gray-900 shadow-lg shadow-gray-200 outline-1 outline-gray-200 dark:shadow-none dark:-outline-offset-1 dark:outline-gray-300"
+            className="w-(--anchor-width) max-h-[min(var(--available-height),23rem)] max-w-(--available-width) overflow-y-auto scroll-pt-2 scroll-pb-2 overscroll-contain rounded-md bg-[canvas] py-2 text-slate-700 shadow-md shadow-slate-200 outline-1 outline-slate-200"
             aria-busy={isPending || undefined}
           >
             <Autocomplete.Status>
               {status && (
-                <div className="flex items-center gap-2 py-1 pl-4 pr-8 text-sm text-gray-600">
+                <div className="flex items-center gap-2 py-1 pl-4 pr-8 text-sm text-slate-600">
                   {status}
                 </div>
               )}
             </Autocomplete.Status>
             <Autocomplete.List>
-              {(post: SearchResult) => (
+              {searchResults.map((post) => (
                 <Autocomplete.Item
-                  key={post.url}
-                  className="flex cursor-default py-2 pr-8 pl-4 text-base leading-4 outline-none select-none data-highlighted:relative data-highlighted:z-0 data-highlighted:text-gray-50 data-highlighted:before:absolute data-highlighted:before:inset-x-2 data-highlighted:before:inset-y-0 data-highlighted:before:z-[-1] data-highlighted:before:rounded data-highlighted:before:bg-gray-900"
+                  key={post.meta.title}
+                  className="flex py-2 pr-8 pl-4 text-base leading-4 outline-none select-none data-highlighted:relative data-highlighted:z-0 data-highlighted:before:absolute data-highlighted:before:inset-x-2 data-highlighted:before:inset-y-0 data-highlighted:before:z-[-1] data-highlighted:before:rounded data-highlighted:before:bg-slate-100 cursor-pointer"
                   value={post}
+                  render={<a href={post.url.replace(/^\/dist/, "")} />}
                 >
-                  <div className="flex w-full flex-col gap-1">
+                  <div className="flex w-full flex-col gap-1 ">
                     <div className="font-medium leading-5">
                       {post.meta.title}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-slate-400">
                       {post.filters.category}
                     </div>
                   </div>
                 </Autocomplete.Item>
-              )}
+              ))}
             </Autocomplete.List>
           </Autocomplete.Popup>
         </Autocomplete.Positioner>
